@@ -1,0 +1,96 @@
+ServiceDocumentTestobject(Gorilla_Listener_Base)#7 (2) {
+  ["failed":protected]=>
+  bool(false)
+  ["suites"]=>
+  array(2) {
+    [""]=>
+    object(stdClass)#191 (2) {
+      ["results"]=>
+      array(4) {
+        ["error"]=>
+        array(0) {
+        }
+        ["failure"]=>
+        array(0) {
+        }
+        ["incomplete"]=>
+        array(0) {
+        }
+        ["skipped"]=>
+        array(0) {
+        }
+      }
+      ["tests"]=>
+      array(0) {
+      }
+    }
+    ["ServiceDocumentTest"]=>
+    object(stdClass)#190 (2) {
+      ["results"]=>
+      array(5) {
+        ["error"]=>
+        array(1) {
+          [0]=>
+          array(1) {
+            ["time"]=>
+            float(0.0058348178863525)
+          }
+        }
+        ["failure"]=>
+        array(0) {
+        }
+        ["incomplete"]=>
+        array(0) {
+        }
+        ["skipped"]=>
+        array(0) {
+        }
+        ["success"]=>
+        array(1) {
+          [0]=>
+          array(1) {
+            ["time"]=>
+            float(0.0058348178863525)
+          }
+        }
+      }
+      ["tests"]=>
+      array(2) {
+        ["testAccessServiceDocument"]=>
+        object(stdClass)#189 (4) {
+          ["description"]=>
+          string(46) "ServiceDocumentTest::testAccessServiceDocument"
+          ["exceptions"]=>
+          array(0) {
+          }
+          ["assertions"]=>
+          int(2)
+          ["success"]=>
+          bool(true)
+        }
+        ["testFailure"]=>
+        object(stdClass)#187 (4) {
+          ["description"]=>
+          string(32) "ServiceDocumentTest::testFailure"
+          ["exceptions"]=>
+          array(2) {
+            [0]=>
+            array(1) {
+              ["time"]=>
+              float(0.0058348178863525)
+            }
+            [1]=>
+            array(1) {
+              ["time"]=>
+              float(0.0058348178863525)
+            }
+          }
+          ["assertions"]=>
+          int(0)
+          ["success"]=>
+          bool(false)
+        }
+      }
+    }
+  }
+}

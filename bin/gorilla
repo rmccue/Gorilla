@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Gorilla Command Line Interface
+ *
+ * @package Gorilla
+ */
+
+require_once(dirname(dirname(__FILE__)) . '/lib/classes/Gorilla.php');
+
+Gorilla::$runner = new Gorilla_Runner_CommandLine($argv);
+function x() {
+	Gorilla::run();
+}
+x();
