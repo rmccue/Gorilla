@@ -123,7 +123,6 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 		$this->load_options($opts);
 		
 		//throw new Gorilla_Exception_NotImplemented();
-		echo $method;
 		$printer = new Gorilla_Listener_Base();
 		$result = $this->run_tests((array) $method, $printer);
 		var_dump($result[1]);
