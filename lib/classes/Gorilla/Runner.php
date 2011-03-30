@@ -48,7 +48,7 @@ abstract class Gorilla_Runner {
 		}
 	}
 	protected function run_tests($tests, $printer) {
-		$suite = new PHPUnit_Framework_TestSuite();
+		$suite = new PHPUnit_Framework_TestSuite('default');
 		foreach ($tests as $case)
 			$suite->addTestSuite($case);
 
