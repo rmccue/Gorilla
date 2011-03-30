@@ -1,14 +1,14 @@
 <?php
 
-class Gorilla_Runner {
+abstract class Gorilla_Runner {
 	protected $options = array();
 
 	public function __construct() {
 		// No-op
 	}
-	protected function load_options($opts) {
-		throw new Gorilla_Exception_NotImplemented();
-	}
+
+	abstract protected function load_options($opts);
+
 	public function get_options() {
 		if (empty($this->options)) {
 			$this->load_options();
@@ -29,12 +29,10 @@ class Gorilla_Runner {
 		$this->options = $options;
 	}
 
-	public function report() {
-		throw new Gorilla_Exception_NotImplemented();
-	}
-	public function run() {
-		throw new Gorilla_Exception_NotImplemented();
-	}
+	//abstract public function report();
+
+	abstract public function run();
+
 	public function exception($exception) {
 		echo "\nGorilla has tripped over!\n\n";
 		echo "An exception occurred:\n";
