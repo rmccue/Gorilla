@@ -65,6 +65,10 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 	}
 
 	const REPORT_INFO = 'info';
-	protected function report() {}
-	protected function reportList() {}
+	protected function report($level, $message) {
+		Gorilla::$runner->report($level, $message);
+	}
+	protected function reportList($level, $message, $list) {
+		Gorilla::$runner->reportList($level, $message, $list);
+	}
 }

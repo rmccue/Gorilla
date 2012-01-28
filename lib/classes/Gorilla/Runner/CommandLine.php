@@ -133,4 +133,15 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 		$printer = new Gorilla_Printer_CommandLine($listener, $this);
 		$printer->print_result();
 	}
+
+	public function report($level, $message) {
+		printf("[%s] %s" . PHP_EOL, $level, $message);
+	}
+
+	public function reportList($level, $message, $list) {
+		printf("[%s] %s" . PHP_EOL, $level, $message);
+		foreach ($list as $item) {
+			printf("    %s" . PHP_EOL, $item);
+		}
+	}
 }
