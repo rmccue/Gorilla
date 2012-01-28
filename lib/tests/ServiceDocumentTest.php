@@ -59,22 +59,31 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 	 * @depends testServiceDocumentExists
 	 */
 	public function testCollectionsExist($document) {
+		$collections = self::getCollectionsFromDocument($document);
+		$reportable = array();
+		foreach ($collections as $name => $accepted) {
+			$reportable[] = $name . ' accepts ' . implode(', ', $accepted);
+		}
+		Gorilla::$runner->reportList(Gorilla_Runner::REPORT_INFO, 'Collections found:', $reportable);
+		$this->assertNotEmpty($collections);
+	}
+
+	protected static function getCollectionsFromDocument($document) {
 		$reader = new SimpleXMLElement($document->body);
 		$reader->registerXPathNamespace('app', 'http://www.w3.org/2007/app');
 		$found_collections = $reader->xpath('//app:collection');
 		$collections = array();
 		foreach ($found_collections as $col) {
 			$title = $col->children('http://www.w3.org/2005/Atom');
-			$title = $title->title;
+			$title = (string) $title->title;
 			$accepted = array();
 			// We need this because otherwise SimpleXML gets funky with >1 'accept'
-			foreach($col->accept as $accept) {
+			foreach ($col->accept as $accept) {
 				$accepted[] = (string) $accept;
 			}
-			$accept = implode(', ', (array) $accepted);
-			$collections[] = $title . ' accepts ' . $accept;
+			$collections[$title] = $accepted;
 		}
-		Gorilla::$runner->reportList(Gorilla_Runner::REPORT_INFO, 'Collections found:', $collections);
-		$this->assertNotEmpty($collections);
+
+		return $collections;
 	}
 }
