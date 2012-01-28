@@ -1,6 +1,7 @@
 <?php
 
 abstract class Gorilla_Runner {
+	const REPORT_DEBUG = 'debug';
 	const REPORT_INFO = 'info';
 	const REPORT_WARNING = 'warning';
 

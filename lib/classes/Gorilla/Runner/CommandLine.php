@@ -19,6 +19,7 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 		$options['uri'] = $opts['uri'];
 
 		$options['trace'] = isset($opts['trace']) ? (bool) $opts['trace'] : false;
+		$options['debug'] = isset($opts['debug']) ? (bool) $opts['debug'] : false;
 		
 		if (!empty($opts['username']) && isset($opts['password'])) {
 			$options['auth'] = array(
@@ -109,6 +110,7 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 	public function run() {
 		$options = array(
 			'u' => 'uri',
+			'v' => 'debug',
 		);
 		$long_options = array(
 			'url' => 'uri',
@@ -118,6 +120,7 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 			'auth-type' => 'auth',
 			'win' => 'using_batch',
 			'trace' => 'trace',
+			'debug' => 'debug',
 		);
 		list($opts, $method, $params) = $this->parse_args($options, $long_options);
 		if (empty($method)) {
@@ -137,10 +140,18 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 	}
 
 	public function report($level, $message) {
+		if ($level === Gorilla_Runner::REPORT_DEBUG && !$this->get_option('debug')) {
+			return;
+		}
+
 		printf("[%s] %s" . PHP_EOL, $level, $message);
 	}
 
 	public function reportList($level, $message, $list) {
+		if ($level === Gorilla_Runner::REPORT_DEBUG && !$this->get_option('debug')) {
+			return;
+		}
+
 		printf("[%s] %s" . PHP_EOL, $level, $message);
 		foreach ($list as $item) {
 			printf("    %s" . PHP_EOL, $item);
