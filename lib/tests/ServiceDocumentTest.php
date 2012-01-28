@@ -18,7 +18,6 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 	 * Set up the 
 	 */
 	public function __construct($name = NULL, array $data = array(), $dataName = '') {
-		$this->http = new HTTPRequest();
 		$this->uri = Gorilla::$runner->get_option('uri');
 		parent::__construct($name, $data, $dataName);
 	}
@@ -26,7 +25,7 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 	/**
 	 */
 	public function testAccessServiceDocument() {
-		$document = $this->http->get($this->uri . '/service');
+		$document = Requests::get($this->uri . '/service');
 		$this->assertEquals(200, $document->status_code);
 		$this->report(self::REPORT_INFO, 'Service document found');
 		
