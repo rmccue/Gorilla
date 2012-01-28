@@ -24,8 +24,9 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Get the service document
 	 */
-	public function testAccessServiceDocument() {
+	public function serviceDocumentProvider() {
 		$options = array(
 			'useragent' => 'Gorilla/0.1 php-requests/' . Requests::VERSION
 		);
@@ -37,10 +38,27 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 		}
 
 		$document = Requests::get($this->uri . '/service', array(), array(), $options);
+		return array(array($document));
+	}
+
+	/**
+	 * Test that we successfully retrieved a service document
+	 *
+	 * @dataProvider serviceDocumentProvider
+	 */
+	public function testServiceDocumentExists($document) {
 		$status = sprintf('Site returned %d with body: %s', $document->status_code, $document->body);
 		$this->assertEquals(200, $document->status_code, $status);
 		Gorilla::$runner->report(Gorilla_Runner::REPORT_INFO, 'Service document found');
-		
+	}
+
+	/**
+	 * Test that the we have collections
+	 *
+	 * @dataProvider serviceDocumentProvider
+	 * @depends testServiceDocumentExists
+	 */
+	public function testCollectionsExist($document) {
 		$reader = new SimpleXMLElement($document->body);
 		$reader->registerXPathNamespace('app', 'http://www.w3.org/2007/app');
 		$found_collections = $reader->xpath('//app:collection');
@@ -58,9 +76,5 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 		}
 		Gorilla::$runner->reportList(Gorilla_Runner::REPORT_INFO, 'Collections found:', $collections);
 		$this->assertNotEmpty($collections);
-	}
-
-	public function testFailure() {
-		throw new Gorilla_Exception_NotImplemented();
 	}
 }
