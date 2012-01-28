@@ -47,14 +47,15 @@ abstract class Gorilla_Runner {
 			printf("  #%d - %s @ L%d: %s()\n", $num, str_replace(Gorilla::$path, 'Gorilla', $trace['file']), $trace['line'], $func);
 		}
 	}
-	protected function run_tests($tests, $printer) {
+	protected function run_tests($tests, $listener) {
 		$suite = new PHPUnit_Framework_TestSuite('default');
-		foreach ($tests as $case)
+		foreach ($tests as $case) {
 			$suite->addTestSuite($case);
+		}
 
 		#return PHPUnit::run($suite);
 		$result = new PHPUnit_Framework_TestResult;
-		$result->addListener($printer);
-		return array($suite->run($result), $printer);
+		$result->addListener($listener);
+		return array($suite->run($result), $listener);
 	}
 }
