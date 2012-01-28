@@ -64,7 +64,11 @@ class Gorilla_Printer_CommandLine {
 
 	protected function print_tests(&$tests) {
 		foreach ($tests as $error) {
-			if (method_exists($error->exception, 'getComparisonFailure') && method_exists($error->exception->getComparisonFailure(), 'toString')) {
+			if ($error->exception instanceof PHPUnit_Framework_Error) {
+				$file = str_replace(Gorilla::$path, 'Gorilla', $error->exception->getFile());
+				printf("  %s: %s (%s@%d)" . PHP_EOL, $error->test->getName(), $error->exception->getMessage(), $file, $error->exception->getLine());
+			}
+			elseif (method_exists($error->exception, 'getComparisonFailure') && method_exists($error->exception->getComparisonFailure(), 'toString')) {
 				printf("  %s:" . PHP_EOL, $error->test->getName());
 
 				// Handle custom assertion messages
