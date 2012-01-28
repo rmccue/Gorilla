@@ -16,13 +16,8 @@ class Gorilla_Printer_CommandLine {
 			if ($name === 'default' && empty($suite->tests)) {
 				continue;
 			}
-			$errors = count($suite->results->error)
-				+ count($suite->results->failure)
-				+ count($suite->results->incomplete)
-				+ count($suite->results->skipped);
-			$successes = count($suite->tests) - $errors;
 
-			$line = sprintf("%s (%d/%d)", $name, $successes, count($suite->tests));
+			$line = sprintf("%s (%d/%d)", $name, count($suite->results->success), count($suite->tests));
 			echo PHP_EOL . $line . PHP_EOL;
 			echo str_repeat("=", strlen($line)) . PHP_EOL . PHP_EOL;
 

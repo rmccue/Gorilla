@@ -83,6 +83,7 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 				'failure' => array(),
 				'incomplete' => array(),
 				'skipped' => array(),
+				'success' => array()
 			),
 			'tests' => array(),
 		);
@@ -124,7 +125,8 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 	public function endTest(PHPUnit_Framework_Test $test, $time) {
 		if (!$this->failed) {
 			$this->test->success = true;
-			$this->addResult('success', $test, null, $time);
+			$exception = null;
+			$this->addResult('success', $test, $exception, $time);
 		}
 		$this->failed = false;
 
