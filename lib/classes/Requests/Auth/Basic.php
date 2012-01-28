@@ -2,7 +2,6 @@
 
 class Requests_Auth_Basic implements Requests_Auth {
 	public function __construct($args = null) {
-		var_dump($args);
 		if (is_array($args)) {
 			if (count($args) !== 2) {
 				throw new Requests_Exception('Invalid number of arguments', 'authbasicbadargs');
@@ -20,7 +19,6 @@ class Requests_Auth_Basic implements Requests_Auth {
 		switch ($type) {
 			case 'curl':
 				curl_setopt($transport_data, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-				var_dump($this->user, $this->pass);
 				curl_setopt($transport_data, CURLOPT_USERPWD, $this->getAuthString());
 				break;
 		}
