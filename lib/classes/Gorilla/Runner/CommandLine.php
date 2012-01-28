@@ -126,6 +126,8 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 		$this->load_options($opts);
 		
 		//throw new Gorilla_Exception_NotImplemented();
+		printf("Gorilla is beginning testing on %s..." . PHP_EOL . PHP_EOL, $this->get_option('uri'));
+
 		$listener = new Gorilla_Listener_Base();
 		$result = $this->run_tests((array) $method, $listener);
 		//var_dump($listener);
