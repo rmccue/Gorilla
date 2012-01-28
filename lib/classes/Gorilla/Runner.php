@@ -1,6 +1,9 @@
 <?php
 
 abstract class Gorilla_Runner {
+	const REPORT_INFO = 'info';
+	const REPORT_WARNING = 'warning';
+
 	protected $options = array();
 
 	public function __construct() {

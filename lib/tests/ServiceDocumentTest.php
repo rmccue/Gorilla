@@ -39,7 +39,7 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 		$document = Requests::get($this->uri . '/service', array(), array(), $options);
 		$status = sprintf('Site returned %d with body: %s', $document->status_code, $document->body);
 		$this->assertEquals(200, $document->status_code, $status);
-		$this->report(self::REPORT_INFO, 'Service document found');
+		Gorilla::$runner->report(Gorilla_Runner::REPORT_INFO, 'Service document found');
 		
 		$reader = new SimpleXMLElement($document->body);
 		$reader->registerXPathNamespace('app', 'http://www.w3.org/2007/app');
@@ -56,19 +56,11 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 			$accept = implode(', ', (array) $accepted);
 			$collections[] = $title . ' accepts ' . $accept;
 		}
-		$this->reportList(self::REPORT_INFO, 'Collections found:', $collections);
+		Gorilla::$runner->reportList(Gorilla_Runner::REPORT_INFO, 'Collections found:', $collections);
 		$this->assertNotEmpty($collections);
 	}
 
 	public function testFailure() {
 		throw new Gorilla_Exception_NotImplemented();
-	}
-
-	const REPORT_INFO = 'info';
-	protected function report($level, $message) {
-		Gorilla::$runner->report($level, $message);
-	}
-	protected function reportList($level, $message, $list) {
-		Gorilla::$runner->reportList($level, $message, $list);
 	}
 }
