@@ -12,8 +12,6 @@ if (in_array('PHPUnit_TextUI_Command', get_declared_classes())) {
  * @subpackage API Tests
  */
 class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
-	const AtomEntryMediaType = 'application/atom+xml;type=entry';
-
 	/**
 	 * Constructor
 	 *
@@ -68,25 +66,6 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 		}
 		Gorilla::$runner->reportList(Gorilla_Runner::REPORT_INFO, 'Collections found:', $reportable);
 		$this->assertNotEmpty($collections);
-	}
-
-	/**
-	 * Test that the we have post collections
-	 *
-	 * @dataProvider serviceDocumentProvider
-	 * @depends testCollectionsExist
-	 */
-	public function testHasPostCollection($document) {
-		$available = array();
-		foreach (self::getCollectionsFromDocument($document) as $name => $accepted) {
-			if (in_array(self::AtomEntryMediaType, $accepted)) {
-				$available[] = $name;
-			}
-		}
-
-		$this->assertNotEmpty($available);
-
-		Gorilla::$runner->reportList(Gorilla_Runner::REPORT_INFO, 'Post collections found:', $available);
 	}
 
 	/**
