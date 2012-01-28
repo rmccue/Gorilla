@@ -17,6 +17,8 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 			$this->usage($opts, 'URI must be specified');
 		}
 		$options['uri'] = $opts['uri'];
+
+		$options['trace'] = isset($opts['trace']) ? (bool) $opts['trace'] : false;
 		
 		if (!empty($opts['username']) && isset($opts['password'])) {
 			$options['auth'] = array(
@@ -115,6 +117,7 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 			'pass' => 'password',
 			'auth-type' => 'auth',
 			'win' => 'using_batch',
+			'trace' => 'trace',
 		);
 		list($opts, $method, $params) = $this->parse_args($options, $long_options);
 		if (empty($method)) {
@@ -125,6 +128,9 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 		//throw new Gorilla_Exception_NotImplemented();
 		$listener = new Gorilla_Listener_Base();
 		$result = $this->run_tests((array) $method, $listener);
-		var_dump($listener);
+		//var_dump($listener);
+
+		$printer = new Gorilla_Printer_CommandLine($listener, $this);
+		$printer->print_result();
 	}
 }
