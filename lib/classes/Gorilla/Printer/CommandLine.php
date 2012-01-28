@@ -68,7 +68,7 @@ class Gorilla_Printer_CommandLine {
 				printf("  %s:" . PHP_EOL, $error->test->getName());
 
 				// Handle custom assertion messages
-				if (method_exists($error->exception, 'getCustomMessage') && $error->exception->getCustomMessage() !== null) {
+				if (method_exists($error->exception, 'getCustomMessage') && $error->exception->getCustomMessage() !== '') {
 					printf("    %s" . PHP_EOL, $error->exception->getCustomMessage());
 				}
 
@@ -81,7 +81,7 @@ class Gorilla_Printer_CommandLine {
 				$result = implode("\n", $result);
 				echo $result;
 			}
-			elseif (method_exists($error->exception, 'getCustomMessage') && $error->exception->getCustomMessage() !== null) {
+			elseif (method_exists($error->exception, 'getCustomMessage') && $error->exception->getCustomMessage() !== '') {
 				// Use custom message over a normal one
 				printf("  %s: %s" . PHP_EOL, $error->test->getName(), $error->exception->getCustomMessage());
 			}
