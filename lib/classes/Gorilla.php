@@ -12,7 +12,7 @@ class Gorilla {
 			$path = Gorilla::$path . '/lib/classes/' . $file_name . '.php';
 		}
 		if (file_exists($path)) {
-			include($path);
+			include_once($path);
 		}
 	}
 	public static function run() {
