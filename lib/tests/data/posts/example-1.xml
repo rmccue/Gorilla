@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<id />
+	<title>Hello &amp; Hi</title>
+	<author><name>Gorilla, a better Atom Protocol Exerciser</name></author>
+	<updated />
+	<link href='https://github.com/rmccue/Gorilla'/>
+	<content type='xhtml'><div xmlns='http://www.w3.org/1999/xhtml'>
+		<p>A test post from &lt;Gorilla&gt;</p>
+		<p>If you see this in an entry, it's probably a left-over from an unsuccessful Ape run; feel free to delete it.</p>
+		</div>
+	</content>
+	<dc:subject>Simians</dc:subject>
+</entry>
