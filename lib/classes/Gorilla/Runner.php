@@ -39,7 +39,18 @@ abstract class Gorilla_Runner {
 		printf("  %s (code %d)\n\n", $exception->getMessage(), $exception->getCode());
 		echo "Traceback:\n";
 		$traced = $exception->getTrace();
+		self::print_trace($traced);
+	}
+
+	public static function print_trace(&$traced) {
 		foreach ($traced as $num => $trace) {
+			if (empty($trace['file'])) {
+				$trace['file'] = 'internal';
+			}
+			if (empty($trace['line'])) {
+				$trace['line'] = 0;
+			}
+
 			$func = $trace['function'];
 			if (isset($trace['class'])) {
 				$func = $trace['class'] . $trace['type'] . $trace['function'];
