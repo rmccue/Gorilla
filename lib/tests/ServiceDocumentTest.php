@@ -19,8 +19,7 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function __construct($name = NULL, array $data = array(), $dataName = '') {
 		$this->uri = Gorilla::$runner->get_option('uri');
-		$this->user = Gorilla::$runner->get_option('user');
-		$this->pass = Gorilla::$runner->get_option('pass');
+		$this->auth = Gorilla::$runner->get_option('auth');
 		parent::__construct($name, $data, $dataName);
 	}
 
@@ -28,8 +27,15 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testAccessServiceDocument() {
 		$options = array(
-			'auth' => array($this->user, $this->pass)
+			'useragent' => 'Gorilla/0.1 php-requests/' . Requests::VERSION
 		);
+
+		if (!empty($this->auth)) {
+			$options = array(
+				'auth' => array($this->auth['user'], $this->auth['pass'])
+			);
+		}
+
 		$document = Requests::get($this->uri . '/service', array(), array(), $options);
 		$status = sprintf('Site returned %d with body: %s', $document->status_code, $document->body);
 		$this->assertEquals(200, $document->status_code, $status);
