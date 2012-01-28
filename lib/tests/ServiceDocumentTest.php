@@ -12,6 +12,8 @@ if (in_array('PHPUnit_TextUI_Command', get_declared_classes())) {
  * @subpackage API Tests
  */
 class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
+	const AtomEntryMediaType = 'application/atom+xml;type=entry';
+
 	/**
 	 * Constructor
 	 *
@@ -66,6 +68,44 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 		}
 		Gorilla::$runner->reportList(Gorilla_Runner::REPORT_INFO, 'Collections found:', $reportable);
 		$this->assertNotEmpty($collections);
+	}
+
+	/**
+	 * Test that the we have post collections
+	 *
+	 * @dataProvider serviceDocumentProvider
+	 * @depends testCollectionsExist
+	 */
+	public function testHasPostCollection($document) {
+		$available = array();
+		foreach (self::getCollectionsFromDocument($document) as $name => $accepted) {
+			if (in_array(self::AtomEntryMediaType, $accepted)) {
+				$available[] = $name;
+			}
+		}
+
+		$this->assertNotEmpty($available);
+
+		Gorilla::$runner->reportList(Gorilla_Runner::REPORT_INFO, 'Post collections found:', $available);
+	}
+
+	/**
+	 * Test that the we have collections
+	 *
+	 * @dataProvider serviceDocumentProvider
+	 * @depends testCollectionsExist
+	 */
+	public function testHasJPEGCollection($document) {
+		$available = array();
+		foreach (self::getCollectionsFromDocument($document) as $name => $accepted) {
+			if (in_array('image/jpeg', $accepted) || in_array('image/*', $accepted)) {
+				$available[] = $name;
+			}
+		}
+
+		$this->assertNotEmpty($available, 'Failed asserting that JPEG collections exist');
+
+		Gorilla::$runner->reportList(Gorilla_Runner::REPORT_INFO, 'JPEG collections found:', $available);
 	}
 
 	protected static function getCollectionsFromDocument($document) {
