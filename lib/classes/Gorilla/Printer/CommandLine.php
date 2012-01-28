@@ -18,6 +18,11 @@ class Gorilla_Printer_CommandLine {
 			}
 
 			$line = sprintf("%s (%d/%d)", $name, count($suite->results->success), count($suite->tests));
+
+			if (count($suite->results->success) === count($suite->tests)) {
+				continue;
+			}
+
 			echo PHP_EOL . $line . PHP_EOL;
 			echo str_repeat("=", strlen($line)) . PHP_EOL . PHP_EOL;
 
