@@ -26,7 +26,8 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testAccessServiceDocument() {
 		$document = Requests::get($this->uri . '/service');
-		$this->assertEquals(200, $document->status_code);
+		$status = sprintf('Site returned %d with message "%s"', $document->status_code, $document->body);
+		$this->assertEquals(200, $document->status_code, $status);
 		$this->report(self::REPORT_INFO, 'Service document found');
 		
 		$reader = new SimpleXMLElement($document->body);

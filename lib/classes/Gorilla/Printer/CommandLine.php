@@ -66,6 +66,13 @@ class Gorilla_Printer_CommandLine {
 		foreach ($tests as $error) {
 			if (method_exists($error->exception, 'getComparisonFailure')) {
 				printf("  %s:" . PHP_EOL, $error->test->getName());
+
+				// Handle custom assertion messages
+				if (method_exists($error->exception, 'getCustomMessage') && $error->exception->getCustomMessage() !== null) {
+					printf("    %s" . PHP_EOL, $error->exception->getCustomMessage());
+				}
+
+				// Get the diff, if there is one
 				$result = $error->exception->getComparisonFailure()->toString();
 				$result = explode("\n", $result);
 				foreach ($result as &$line) {
@@ -74,10 +81,15 @@ class Gorilla_Printer_CommandLine {
 				$result = implode("\n", $result);
 				echo $result;
 			}
+			elseif (method_exists($error->exception, 'getCustomMessage') && $error->exception->getCustomMessage() !== null) {
+				// Use custom message over a normal one
+				printf("  %s: %s" . PHP_EOL, $error->test->getName(), $error->exception->getCustomMessage());
+			}
 			else {
 				printf("  %s: %s" . PHP_EOL, $error->test->getName(), $error->exception->getMessage());
 			}
 
+			// Only trace if told to
 			if ($this->runner->get_option('trace') === true) {
 				$trace = $error->exception->getTrace();
 				$this->runner->print_trace($trace);
