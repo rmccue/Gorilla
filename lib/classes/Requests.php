@@ -150,9 +150,19 @@ class Requests {
 			'redirects' => 10,
 			'blocking' => true,
 			'type' => $type,
-			'filename' => false
+			'filename' => false,
+			'auth' => false
 		);
 		$options = array_merge($defaults, $options);
+
+		// Special case for simple basic auth
+		if (is_array($options['auth'])) {
+			$options['auth'] = new Requests_Auth_Basic($options['auth']);
+		}
+		if ($options['auth'] !== false) {
+			$options['auth']->before_request($url, $headers, $data, $type, $options);
+		}
+
 		$transport = self::get_transport();
 		$response = $transport->request($url, $headers, $data, $options);
 		return self::parse_response($response, $url, $headers, $data, $options);

@@ -55,6 +55,10 @@ class Requests_Transport_cURL implements Requests_Transport {
 			curl_setopt($this->fp, CURLOPT_HEADERFUNCTION, array(&$this, 'stream_headers'));
 		}
 
+		if (!empty($options['auth'])) {
+			$options['auth']->before_send('curl', $this->fp, $url, $headers, $data, $options);
+		}
+
 		if ($options['filename'] !== false) {
 			$stream_handle = fopen($options['filename'], 'wb');
 			curl_setopt($this->fp, CURLOPT_FILE, $stream_handle);
