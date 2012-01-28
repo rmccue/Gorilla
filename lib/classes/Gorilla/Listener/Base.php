@@ -2,15 +2,15 @@
 class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 	protected $suites;
 	protected $suite;
-	protected $test;
 
+	protected $test;
 	protected $failed = false;
 
 	protected function addResult($type, PHPUnit_Framework_Test $test, $e, $time) {
 		array_push(
 			$this->suite->results->$type,
 			(object) array(
-				'test' => $test->getName(),
+				'test' => $test,
 				'exception' => $e,
 				'time' => $time
 			)
