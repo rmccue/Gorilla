@@ -19,14 +19,19 @@ class ServiceDocumentTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function __construct($name = NULL, array $data = array(), $dataName = '') {
 		$this->uri = Gorilla::$runner->get_option('uri');
+		$this->user = Gorilla::$runner->get_option('user');
+		$this->pass = Gorilla::$runner->get_option('pass');
 		parent::__construct($name, $data, $dataName);
 	}
 
 	/**
 	 */
 	public function testAccessServiceDocument() {
-		$document = Requests::get($this->uri . '/service');
-		$status = sprintf('Site returned %d with message "%s"', $document->status_code, $document->body);
+		$options = array(
+			'auth' => array($this->user, $this->pass)
+		);
+		$document = Requests::get($this->uri . '/service', array(), array(), $options);
+		$status = sprintf('Site returned %d with body: %s', $document->status_code, $document->body);
 		$this->assertEquals(200, $document->status_code, $status);
 		$this->report(self::REPORT_INFO, 'Service document found');
 		
