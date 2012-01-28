@@ -1,12 +1,19 @@
 <?php
 class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
+	protected $suites;
+	protected $suite;
+	protected $test;
+
 	protected $failed = false;
 
 	protected function addResult($type, PHPUnit_Framework_Test $test, $e, $time) {
-		$this->suite->results[$type][] = array(
-			'test' => $test->getName(),
-			'exception' => $e,
-			'time' => $time
+		array_push(
+			$this->suite->results->$type,
+			(object) array(
+				'test' => $test->getName(),
+				'exception' => $e,
+				'time' => $time
+			)
 		);
 		$this->test->exceptions[] = array(
 			'exception' => $e,
@@ -71,7 +78,7 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 	public function startTestSuite(PHPUnit_Framework_TestSuite $suite) {
 		$this->suites[$suite->getName()] = (object) array(
 			//'suite' => $suite,
-			'results' => array(
+			'results' => (object) array(
 				'error' => array(),
 				'failure' => array(),
 				'incomplete' => array(),
