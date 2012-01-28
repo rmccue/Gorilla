@@ -3,12 +3,14 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 	protected $suites;
 	protected $suite;
 
+	protected $current_suites = array();
+
 	protected $test;
 	protected $failed = false;
 
 	protected function addResult($type, PHPUnit_Framework_Test &$test, &$e, $time) {
 		array_push(
-			$this->suite->results->$type,
+			$this->current_suite()->results->$type,
 			(object) array(
 				'test' => &$test,
 				'exception' => &$e,
@@ -77,7 +79,7 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 	 */
 	public function startTestSuite(PHPUnit_Framework_TestSuite $suite) {
 		$this->suites[$suite->getName()] = (object) array(
-			//'suite' => $suite,
+			'suite' => $suite,
 			'results' => (object) array(
 				'error' => array(),
 				'failure' => array(),
@@ -87,7 +89,7 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 			),
 			'tests' => array(),
 		);
-		$this->suite = &$this->suites[$suite->getName()];
+		array_push($this->current_suites, $this->suites[$suite->getName()]);
 	}
 
 	/**
@@ -97,7 +99,7 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 	 * @since  Method available since Release 2.2.0
 	 */
 	public function endTestSuite(PHPUnit_Framework_TestSuite $suite) {
-		unset($this->suite);
+		array_pop($this->current_suites);
 	}
 
 	/**
@@ -106,14 +108,14 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 	 * @param  PHPUnit_Framework_Test $test
 	 */
 	public function startTest(PHPUnit_Framework_Test $test) {
-		$this->suite->tests[$test->getName()] = (object) array(
+		$this->current_suite()->tests[$test->getName()] = (object) array(
 			//'test' => $test,
 			'description' => PHPUnit_Util_Test::describe($test),
 			'exceptions' => array(),
 			'assertions' => 0,
 			'success' => false,
 		);
-		$this->test = &$this->suite->tests[$test->getName()];
+		$this->test = &$this->current_suite()->tests[$test->getName()];
 	}
 
 	/**
@@ -134,6 +136,14 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 			$this->test->assertions = $test->getNumAssertions();
 		}
 		unset($this->test);
+	}
+
+	protected function &current_suite() {
+		$last = count($this->current_suites) - 1;
+		if ($last < 0) {
+			throw new Exception('No suite');
+		}
+		return $this->current_suites[$last];
 	}
 
 	public function &get_result() {
