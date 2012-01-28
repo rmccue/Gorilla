@@ -133,4 +133,8 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 		}
 		unset($this->test);
 	}
+
+	public function &get_result() {
+		return $this->suites;
+	}
 }
