@@ -47,7 +47,7 @@ class Gorilla {
 	public static function load_phpunit() {
 		if (!class_exists('PHPUnit_TestCase')) {
 			include 'PHPUnit/Autoload.php';
-			if (!class_exists('PHPUnit_TestCase')) {
+			if (!function_exists('phpunit_autoload')) {
 				throw new Exception('PHPUnit could not be loaded');
 			}
 		}
