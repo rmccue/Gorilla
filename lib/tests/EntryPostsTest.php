@@ -89,7 +89,6 @@ class EntryPostsTest extends PHPUnit_Framework_TestCase {
 	 * Sets title, summary and id.
 	 */
 	public function testSparsePost() {
-		$this->assertFalse(true);
 		$available = self::getCollectionsFromDocument($this->document);
 		$proper = null;
 		foreach ($available as $name => $collection) {
