@@ -1,5 +1,7 @@
 <?php
 class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
+	protected $runner;
+
 	protected $suites;
 	protected $suite;
 
@@ -7,6 +9,10 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 
 	protected $test;
 	protected $failed = false;
+
+	public function __construct(&$runner) {
+		$this->runner = &$runner;
+	}
 
 	protected function addResult($type, PHPUnit_Framework_Test &$test, &$e, $time) {
 		array_push(
@@ -21,6 +27,9 @@ class Gorilla_Listener_Base implements PHPUnit_Framework_TestListener {
 			'exception' => $e,
 			'time' => $time,
 		);
+
+		$this->runner->print_output($test->getName(), $test->getActualOutput());
+		$this->runner->print_status($type);
 	}
 	/**
 	 * An error occurred.

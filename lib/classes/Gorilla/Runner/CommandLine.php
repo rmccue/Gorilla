@@ -131,7 +131,7 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 		//throw new Gorilla_Exception_NotImplemented();
 		printf("Gorilla is beginning testing on %s..." . PHP_EOL . PHP_EOL, $this->get_option('uri'));
 
-		$listener = new Gorilla_Listener_Base();
+		$listener = new Gorilla_Listener_Base($this);
 		$result = $this->run_tests((array) $method, $listener);
 		//var_dump($listener);
 
@@ -156,5 +156,15 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 		foreach ($list as $item) {
 			printf("    %s" . PHP_EOL, $item);
 		}
+	}
+
+	public function print_output($test, $output) {
+		echo $test . PHP_EOL;
+		echo str_repeat("-", strlen($test)) . PHP_EOL;
+		echo $output . PHP_EOL;
+	}
+
+	public function print_status($status) {
+		echo $status . PHP_EOL;
 	}
 }
