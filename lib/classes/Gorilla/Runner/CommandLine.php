@@ -159,12 +159,12 @@ class Gorilla_Runner_CommandLine extends Gorilla_Runner {
 	}
 
 	public function print_output($test, $output) {
-		echo $test . PHP_EOL;
+		echo PHP_EOL . $test . PHP_EOL;
 		echo str_repeat("-", strlen($test)) . PHP_EOL;
-		echo $output . PHP_EOL;
+		echo $output;
 	}
 
 	public function print_status($status) {
-		echo $status . PHP_EOL;
+		$this->report(Gorilla_Runner::REPORT_RESULT, $status);
 	}
 }

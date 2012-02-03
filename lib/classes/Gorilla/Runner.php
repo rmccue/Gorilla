@@ -4,6 +4,7 @@ abstract class Gorilla_Runner {
 	const REPORT_DEBUG = 'debug';
 	const REPORT_INFO = 'info';
 	const REPORT_WARNING = 'warning';
+	const REPORT_RESULT = 'result';
 
 	protected $options = array();
 
