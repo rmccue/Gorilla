@@ -12,6 +12,7 @@ class AtomPubHelper_Entry {
 		}
 
 		$this->document = new DOMDocument('1.0', 'utf-8');
+		$this->document->appendChild($this->document->createElementNS(SIMPLEPIE_NAMESPACE_ATOM_10, 'entry'));
 		$this->set_element('title', 'From a Gorilla!');
 		$this->set_element('summary', 'Summary from a <strong>&lt;Gorilla&gt;</strong> at ' . date('c'), array('type' => 'text'));
 		$this->set_element('id', 'tag:ryanmccue.info,2012:' . sprintf("%06d%06d", rand(0, 100000), rand(0, 100000)));
